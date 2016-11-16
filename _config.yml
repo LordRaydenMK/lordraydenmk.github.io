@@ -1,18 +1,18 @@
 # Site settings
-title: Jekyll-Uno
-description: 'Jekyll-Uno - a minimal, responsive theme for Jekyll'
-url: 'http://joshgerdes.com/jekyll-uno'
-baseurl: '/jekyll-uno'
-# google_analytics: 'UA-XXXXXX-X'
-# disqus_shortname: 'your-disqus-name'
+title: Stojan Anastasov's blog
+description: 'Android developer crafting native Android apps'
+url: 'http://lordraydenmk.github.io/'
+baseurl: '/'
+google_analytics: 'UA-42931201-6'
+disqus_shortname: 'lordraydenmk'
 
 author:
-  name: 'Josh Gerdes'
-  email: josh@joshgerdes.com
-  twitter_username: joshgerdes
-  facebook_username: joshgerdes
-  github_username:  joshgerdes
-  linkedin_username:  joshgerdes
+  name: 'Stojan Anastasov'
+  email: stolea@gmail.com
+  facebook_username: stole.anastasov
+  github_username:  lordraydenmk
+  linkedin_username:  sanastasov
+  stackoverflow: 1011435/lordraydenmk
 
 defaults:
   -
