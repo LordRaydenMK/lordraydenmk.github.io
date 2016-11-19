@@ -27,4 +27,6 @@ I forked the project to my [Github account](https://github.com/LordRaydenMK/andr
 
 The first step is to configure Kotlin in the project. Assuming the [Kotlin Plugin](https://plugins.jetbrains.com/plugin/6954) is installed this step is accomplished with a single command: Configure Kotlin in project (Tools -> Kotlin -> Configure Kotlin in Project). The command adds the kotlin gradle plugin to the classpath (in the top level build.gradle file), applies the kotlin-android plugin, adds src/main/kotlin to the source sets and adds the kotlin standard library as a dependency. You can read more about setting up Kotlin with gradle in the [official documentation](https://kotlinlang.org/docs/reference/using-gradle.html). The commit with the changes is [here](https://github.com/LordRaydenMK/android-architecture/commit/22d6bdce9696390843f88d7acb153330f9ef877d).
 
-In the next article I'll convert some Java code to Kotlin starting with the model layer (*data* package).
+In the [next article][todo-part-2] I'll convert some Java code to Kotlin starting with the model layer (*data* package).
+
+[todo-part-2]: /2016/converting-a-todo-app-to-kotlin-part-2
