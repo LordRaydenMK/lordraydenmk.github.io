@@ -16,15 +16,25 @@ Before I start with the main topic for this article I just want to mention I am 
 For this interface the automatic conversion was perfect.
 
 ## TasksRemoteDataSource
-The automatic conversion for this class results in build errors in the `getInstance` method. The fix is simple, just use the `!!` operator on the return value.
+The automatic conversion for this class results in build errors in the `getInstance` method. This happens because `INSTANCE` is mutable and the compiler can't guarantee that the value doesn't change between the null check and the return.
 
 {% highlight kotlin linenos %}
-val instance: TasksRemoteDataSource
-    get() {
-        if (INSTANCE == null) {
-            INSTANCE = TasksRemoteDataSource()
+companion object {
+    val instance: TasksRemoteDataSource
+        get() {
+            if (INSTANCE == null) {
+                INSTANCE = TasksRemoteDataSource()
+            }
+            return INSTANCE
         }
-        return INSTANCE!!
+    }
+{% endhighlight %}
+
+Kotlin does have a nice feature to solve this: [Lazy initialization][lazy-initialization]. The lazy function delays the execution of the lambda until the first time `get()` is called. Subsequent calls to `get()` simply return the remembered result. 
+
+{% highlight kotlin linenos %}
+    companion object {
+        val INSTANCE: TasksRemoteDataSource by lazy { TasksRemoteDataSource() }
     }
 {% endhighlight %}
 
@@ -96,6 +106,7 @@ The code for this article can be found [here][github-part3].
 [issue235]: https://github.com/googlesamples/android-architecture/issues/235
 [shyish-kotlin]: https://github.com/Shyish/android-architecture/tree/dev-todo-mvp-kotlin
 [pull-2]: https://github.com/Shyish/android-architecture/pull/2
+[lazy-initialization]: https://kotlinlang.org/docs/reference/delegated-properties.html#lazy
 [object-declaration]: https://kotlinlang.org/docs/reference/object-declarations.html#object-declarations
 [github-part3]: https://github.com/LordRaydenMK/android-architecture/releases/tag/part-3
 [kodein]: https://github.com/SalomonBrys/Kodein
