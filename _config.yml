@@ -1,8 +1,8 @@
 # Site settings
 title: Stojan Anastasov's blog
 description: 'Android developer crafting native Android apps'
-url: 'http://lordraydenmk.github.io/'
-baseurl: '/'
+url: 'http://lordraydenmk.github.io'
+baseurl: ''
 google_analytics: 'UA-42931201-6'
 disqus_shortname: 'lordraydenmk'
 
