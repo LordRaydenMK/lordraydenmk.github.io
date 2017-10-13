@@ -28,7 +28,7 @@ A few days after Hacktoberfest 2017 started I run into an interested project on 
 
 I also opened another pull request fixing the bug I had found.
 
-Getting started with contributing to OSS can be intimidating. Starting small can help gain some confidence. Helping with documentation or tests is a good place to start.
+Getting started with contributing to OSS can be intimidating. Starting small can help gain some confidence. Helping with documentation or tests, like I did, is a good place to start. There are thousands of beginner friendly issues tagged with [hacktoberfest][hacktoberfest-issues] waiting for you.
 
 Are you participating in Hacktoberfest? Do you remember your first OSS contribution?
 
@@ -38,3 +38,4 @@ Are you participating in Hacktoberfest? Do you remember your first OSS contribut
 [pull-request]: https://github.com/frankiesardo/auto-parcel/pull/36
 [tornado-fx]: https://github.com/edvin/tornadofx
 [tornado-pull]: https://github.com/edvin/tornadofx/pull/486
+[hacktoberfest-issues]: https://github.com/search?utf8=%E2%9C%93&q=state%3Aopen+label%3Ahacktoberfest+is%3Aissue&type=Issues&utm_source=DigitalOcean_Hacktoberfest2017
