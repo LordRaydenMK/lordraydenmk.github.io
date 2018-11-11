@@ -10,9 +10,9 @@ tags:
 
 A few days ago I run into this [blog post][hangman-zio] about implementing a console Hangman game using [Scala ZIO][scala-zio]. The blog post is based on [this talk][hangman-talk] delivered by [John De Goes][john-de-goes], for the Scala Kyiv meetup, where he codes a console Hangman game using functional programming.
 
-After I saw the post I was curious how would the code look like in Koltin with [arrow][arrow-kt] so I decided to try and write it. You can find the result [here][arrow-hangman].
+After I saw the post I was curious how the code would look like in Koltin with [arrow][arrow-kt] so I decided to try and write it. You can find the result [here][arrow-hangman].
 
-I am still a beginner in functional programming so I asked for [feedback][feedback] from the arrow maintainers on kotlinlang slack workspace. They were very helpful and I made a few improvements based on their feedback.
+I am still a beginner in functional programming so I asked for [feedback][feedback] from the arrow maintainers on the kotlinlang slack workspace. They were very helpful and I made a few improvements based on their feedback.
 
 # Key differences
 
