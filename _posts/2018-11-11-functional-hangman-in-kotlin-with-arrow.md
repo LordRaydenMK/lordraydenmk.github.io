@@ -30,10 +30,6 @@ fun getStrLn(): IO<String> = IO {
 }
 {% endhighlight %}
 
-## ExitStatus
-
-`ExitStatus` is another Scala ZIO specific type. I replaced it with a simple enum which is not equivalent but for this simple use case it does the job.
-
 ## For comprehensions
 
 [For comprehensions][scala-for] are built into the scala language. Unfortunately Kotlin doesn't have the same feature. But Kotlin has Coroutines so the Arrow team built [Comprehensions over coroutines][arrow-comp] which can be used in a similar way to make the code more readable.
