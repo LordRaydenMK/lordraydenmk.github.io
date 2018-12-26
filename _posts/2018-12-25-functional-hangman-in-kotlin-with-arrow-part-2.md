@@ -39,12 +39,12 @@ putStrLn("Hello World").subscribe()
 Here both`IO` and `Single` have something in common. A set of **capabilities** like: **lazy evaluation**, **exception handling**, and **running forever** or **completing with a result** of type `A`. `IO` and `Single` do a lot more, but for this use case, we want something as simple as possible that has the same capabilities. There is a type-class in Arrow that can do just that and it's called `MonadDefer`([more info][monad-defer]). After a few iterations, and feedback from the Arrow team, this is the code I came up with for printing to the console.
 
 {% highlight kotlin %}
-fun <F> putStrLn(M: MonadDefer<F>, line: String): Kind<F, Unit> = M.invoke {
+fun <F> putStrLn(M: MonadDefer<F>, line: String): Kind<F, Unit> = M.delay {
     println(line)
 }
 {% endhighlight %}
 
-The `putStrLn` function is generic with type `F`, but not any `F`. This `F`, whatever it is, need to do certain things like **lazy evaluation** and **error handling**. This `F` thing needs the **capabilities** of `MonadDefer`. The return value also needs a type parameter, and in Arrow we can do that by returning `Kind<F, SOMETHING>`. In the case of printing to command line, that `SOMETHING` is `Unit` (no return value). `MonadDefer` comes with an `invoke` function that we can use to construct the value of `Kind<F, Unit>`. We pass a lambda inside which will be lazily evaluated.
+The `putStrLn` function is generic with type `F`, but not any `F`. This `F`, whatever it is, need to do certain things like **lazy evaluation** and **error handling**. This `F` thing needs the **capabilities** of `MonadDefer`. The return value also needs a type parameter, and in Arrow we can do that by returning `Kind<F, SOMETHING>`. In the case of printing to command line, that `SOMETHING` is `Unit` (no return value). `MonadDefer` comes with an `delay` function that we can use to construct the value of `Kind<F, Unit>`. We pass a lambda inside which will be lazily evaluated.
 
 Compared to the original implementation we have a few key differences:
 
@@ -73,7 +73,7 @@ Reading from the console is similar to writing to it. We still need a type param
 fun getStrLn(): IO<String> = IO { readLine() ?: throw IOException("Failed to read input!") }
 
 // Polymorphic code
-fun <F> getStrLn(M: MonadDefer<F>): Kind<F, String> = M.invoke {
+fun <F> getStrLn(M: MonadDefer<F>): Kind<F, String> = M.delay {
     readLine() ?: throw IOException("Failed to read input!")
 }
 {% endhighlight %}
@@ -160,7 +160,7 @@ I am still learning FP and I don't know most of the type-classes in Arrow and wh
 To avoid passing `M` to `printStrLn` every time I can convert it to an extension function on `MonadDefer`
 
 {% highlight kotlin %}
-fun <F> MonadDefer<F>.putStrLn(line: String): Kind<F, Unit> = invoke {
+fun <F> MonadDefer<F>.putStrLn(line: String): Kind<F, Unit> = delay {
     println(line)
 }
 {% endhighlight %}
@@ -171,7 +171,7 @@ and I can use [Implementation by delegation][implementation-delegation] and have
 class Hangman<F>(private val M: MonadDefer<F>): MonadDefer<F> by M
 {% endhighlight %}
 
-This means everywhere inside the `Hangman` class I can use the methods of `MonadDefer` like `binding` and `invoke` and extension methods like `putStrLn`.
+This means everywhere inside the `Hangman` class I can use the methods of `MonadDefer` like `binding` and `delay` and extension methods like `putStrLn`.
 
 {% highlight kotlin %}
 val hangman: Kind<F, Unit> = binding {
@@ -188,9 +188,11 @@ val hangman: Kind<F, Unit> = binding {
 
 You can find the full implementation [here][hangman-part2].
 
+_**Note**: the code samples here use the function `delay` which doesn't exist in the latest published version (0.8.1). In arrow 0.8.2 `invoke` (used in the code on Github) will be deprecated and replaced by `delay`._
+
 # Conclusion
 
-Working with abstractions like `MonadDefer` frees the business logic from implementation details like `IO` or `Single`. It can also enable easier composition of different modules because the decision for the concrete data type is delayed until the main program.
+Working with abstractions like `MonadDefer` frees the business logic from implementation details like `IO` or `Single`. It can also enable easier composition of different modules because the decision for the concrete data type is delayed until the main program. 
 
 [fp-hangman]: /2018/functional-hangman-in-kotlin-with-arrow
 [kotlin-weekly]: https://mailchi.mp/kotlinweekly/kotlin-weekly-120
