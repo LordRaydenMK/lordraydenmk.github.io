@@ -13,7 +13,7 @@ cover_image: /images/posts/lego.jpg
 ![Compose code as it was lego](/images/posts/lego.jpg)
 *Photo by [Ryan Yoo][ryan] on [Unsplash][unsplash]*
 
-Functional Programing is amazing. It limits the things you can do (no nulls, no exceptions, no side effects...) and in return you get some benefits. Some benefits from FP are easy to explain and some not so much. I have been playing with FP for more than a year and only few weeks ago, when I started reading [Functional Programming in Scala][fp-scala], I found an amazing example the benefits of pure functions.
+Functional Programing is amazing. It limits the things you can do (no nulls, no exceptions, no side effects...) and in return you get some benefits. Some benefits of FP are easy to explain and some not so much. I have been playing with FP for more than a year and only few weeks ago, when I started reading [Functional Programming in Scala][fp-scala], I found an amazing example the benefits of pure functions.
 
 ## The problem
 
