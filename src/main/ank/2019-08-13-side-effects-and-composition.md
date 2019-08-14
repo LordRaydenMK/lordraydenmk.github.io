@@ -173,7 +173,7 @@ fun buyCoffees(
 }
 ```
 
-The return type is `Pair<List<Coffee, Charge>>` containing a list of purchased coffees and a single charge for all of them. To create this the `buyCoffee` function is used to populate a list with `n` coffee items. The `unzip` function is used to separate the coffees from the charges. Charges are combined using the `combine` function defined above.
+The return type is `Pair<List<Coffee>, Charge>` containing a list of purchased coffees and a single charge for all of them. To create this the `buyCoffee` function is used to populate a list with `n` coffee items. The `unzip` function is used to separate the coffees from the charges. Charges are combined using the `combine` function defined above.
 
 Again the concern of executing the purchase is pushed to another part of the program.
 
