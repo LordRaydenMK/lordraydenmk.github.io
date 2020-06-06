@@ -26,7 +26,6 @@ so the first draft of the code looks like this:
 
 
 ```kotlin
-
 import coffee.*
 
 fun buyCoffee(cc: CreditCard): Coffee {
@@ -47,7 +46,6 @@ The side effect makes `buyCoffee` hard to test in isolation. It would be nice (a
 The testability problem can be fixed using Dependency Injection.
 
 ```kotlin
-
 fun buyCoffee(cc: CreditCard, p: Payments): Coffee {
     val cup = Coffee()
     p.charge(cc, cup.price)
@@ -73,7 +71,6 @@ The problem of buying a single coffee is already solved with `buyCoffee`. It wou
 The first draft of `buyCoffees` looks like this:
 
 ```kotlin
-
 fun buyCoffees(
     cc: CreditCard,
     p: Payments,
@@ -102,7 +99,6 @@ I mentioned the word *side effect* multiple times. It's time to explain what it 
 Given this version of `buyCoffee`:
 
 ```kotlin
-
 fun buyCoffee(cc: CreditCard, p: Payments): Coffee {
     val cup = Coffee()
     p.charge(cc, cup.price)
@@ -135,7 +131,6 @@ I can push the problem to the payment processor. I can create `BatchPaymentsProc
 The side effect is preventing composition. If I remove it maybe I can regain composition.
 
 ```kotlin
-
 fun buyCoffee(cc: CreditCard): Pair<Coffee, Charge> {
     val cup = Coffee()
     val charge = Charge(cc, cup.price)
@@ -152,7 +147,6 @@ The `buyCoffee` function is only responsible for creating the `Charge` which is 
 Since `Charge` is a regular value it can easily be combined.
 
 ```kotlin
-
 fun combine(c1: Charge, c2: Charge): Charge =
     if (c1.cc == c2.cc) Charge(c1.cc, c1.price + c2.price)
     else throw IllegalArgumentException(
@@ -167,7 +161,6 @@ two charges, given they have the same Credit Card are combined by adding their p
 I can now implement the `buyCoffees` function in terms of the pure `buyCoffee` like this:
 
 ```kotlin
-
 fun buyCoffees(
     cc: CreditCard,
     n: Int
