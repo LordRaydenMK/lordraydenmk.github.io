@@ -45,7 +45,7 @@ Check the [LiveData][live-data] docs for all benefits.
 
 ## LiveData and Events
 
-In situations like showing a `Snackbar`/dialog or navigating to a different `Activity/Fragment` the `ViewModel` also needs to notify the `LifecycleOwner`. A plain old `LiveData` doesn't work well here because it caches the last item. As a workaround, in the official Android architecture samples there is a `SingleLiveEvent` implementation of `LiveData`.MySate
+In situations like showing a `Snackbar`/dialog or navigating to a different `Activity/Fragment` the `ViewModel` also needs to notify the `LifecycleOwner`. A plain old `LiveData` doesn't work well here because it caches the last item. As a workaround, in the official Android architecture samples there is a `SingleLiveEvent` implementation of `LiveData`.
 
 ## Data Layer
 
