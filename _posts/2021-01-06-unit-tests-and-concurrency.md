@@ -51,7 +51,7 @@ Since the list is 15-20 elements, I am using `concatMapEager` to execute the API
 @Test
 fun `execute - first call succeeds, one failed call to #2 - one full item, one item with default value`() {
     val items = listOf("Item 1" to "https://item1.jpg", "Item 2" to "invalid url")
-    val service = successService(items)
+    val service = successService(items) // Fake implementation of a retrofit service, always returns success
 
     val viewModel = ViewModel(service)
 
@@ -67,7 +67,7 @@ fun `execute - first call succeeds, one failed call to #2 - one full item, one i
 }
 ```
 
-Here, `awaitCount(2)` makes sure the assertions after it are ran only after it gets at least 2 items. Again RxJava has excellent testing support.
+Here, `awaitCount(2)` makes sure the assertions after it are ran only after it gets at least 2 items.
 
 ## The Refactor
 
@@ -91,12 +91,12 @@ What if we display the data as it becomes available.
 
 I was already using `ListAdapter` which has built-in diffing support. I can send an updated list and it will do it's magic to update the changed elements only.
 
-## First attempt
+## Improving the solution
 
-The original code was written as a single Rx chain. It emits a Loading state, then does the API calls, combines the data and emits a Content state (or Error state in case of failure).
-I modified it to: emit a Content state containing the list of elements from API call #1 right after the call is done. The data from call #2 had some default values for the time being.
-After each invocation of call #2, get the current state, update the element and emit a new content state
-I ran the app, it looked fine. I ran my tests and they failed as expected. I updated the tests to include the intermittent states (the changes included more view states being emitted). Ran the tests again, two worked, one failed. Ran again, all green.
+The original code was written as a single Rx chain. It emits a `Loading` state, then does the API calls, combines the data and emits a `Content` state (or an `Error` state in case of failure).
+I modified it to: emit a `Content` state containing the list of elements from API call #1 right after the call is done. The data from call #2 had some default values for the time being.
+After each invocation of call #2, get the current state, update the element and emit a new `Content` state.
+I ran my tests and they failed as expected. I updated the tests to include the intermittent states (the changes caused emitting partial `Content` states). Ran the tests again, two worked, one failed. Ran again, all green.
 
 The updated test:
 
@@ -124,12 +124,18 @@ the only changes in the test are: the argument to `awaitCount` went from 2 to 4 
 
 My refactoring made my tests flaky. Depending of the scheduling and the order of the requests for API call #2 I would get the correct or wrong result. My code had a concurrency issue.
 
-My state lived in a serialized `BehaviorSubject`. I would update the state by reading it from the subject, create an immutable copy of the updated state, write back the new state to the `Subject`. However this is NOT thread safe. Since the state updates happened on the computation pool, multiple threads could do it at the same time. This resulted in inconsistent state, the results of some API calls would get overwritten by the next call.
+![Multithreading theory VS practice](/images/posts/concurrency.jpg)
+
+My state lives in a serialized `BehaviorSubject`. I would update the state by reading it from the subject, create an immutable copy of the updated state, write back the updated state to the `Subject`. However this is NOT thread safe. Since the state updates happened on the computation pool, multiple threads could do it at the same time. This resulted in inconsistent state, the results of some API calls would get overwritten by the next call.
 
 ## Conclusion
 
-When testing RxJava code, you do NOT have to replace all schedulers with Trampoline. Doing that will make you miss possible concurrency issues. Using the real schedulers can help you catch concurrency issues.
+When testing RxJava code, you do NOT have to replace all schedulers with Trampoline. Doing that will make you miss possible concurrency issues. Using the real schedulers can help you catch those concurrency issues. It is not a perfect solution, but better than nothing.
 Don't replace all schedulers with trampoline by default, make it a conscious choice to do so, or not do it.
+
+Thanks to [Marcello][marcello] and [Gaël][gael] for the review of this post.
 
 [rx-rule]: https://github.com/Plastix/RxSchedulerRule
 [simon]: https://twitter.com/vergauwen_simon
+[marcello]: https://twitter.com/marcellogalhard
+[gael]: https://twitter.com/GaelMarhic
