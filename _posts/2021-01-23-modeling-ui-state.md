@@ -9,7 +9,9 @@ tags:
 - kotlin
 ---
 
-The recommended approach from Google for Android development is holding the UI state in a `ViewModel` and having the `View` observe it using `LiveData`, `StateFlow`, `RxJava` or a similar tool. But how to model the view state? Use a data class or a sealed class? Use one observable property or multiple ones? In this post I will describe the tradeoffs between the approaches and present a tool that will help you decide. This article is heavily inspired by [Types as Sets][types-as-sets] from the Elm guide. 
+The recommended approach from Google for Android development is holding the UI state in a `ViewModel` and having the `View` observe it using `LiveData`, `StateFlow`, `RxJava` or a similar tool. But how to model the view state? Use a data class or a sealed class? Use one observable property or multiple ones? In this post I will describe the tradeoffs between the approaches and present a tool that will help you decide. This article is heavily inspired by [Types as Sets][types-as-sets] from the Elm guide.
+
+![Architecture](/images/posts/arch.jpg) Photo by [Marc-Olivier Jodoin][mark] on [Unsplash][unsplash]
 
 ## Types as sets
 
@@ -190,3 +192,5 @@ To model problems in code we use built in types like: `Boolean`, `Int`, `String`
 [types-as-sets]: https://guide.elm-lang.org/appendix/types_as_sets.html
 [make-ds]: https://www.youtube.com/watch?v=x1FU3e0sT1I
 [cardinality]: https://en.wikipedia.org/wiki/Cardinality
+[mark]: https://unsplash.com/@marcojodoin
+[unsplash]: https://unsplash.com/s/photos/architecture
