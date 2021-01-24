@@ -54,7 +54,12 @@ One flavor of product types in Kotlin are `Pair` and `Triple`. Let's take a look
 - `Pair<Unit, Boolean>` - cardinality(Unit) * cardinality(Boolean) = 1 * 2 = 2
 - `Pair<Boolean, Boolean>` - 2 * 2 = 4
 
-`Pair<Unit, Boolean>` contains the elements: `Pair(Unit, false)` and `Pair(Unit, true)`. 
+`Pair<Unit, Boolean>` contains the elements:
+
+- `Pair(Unit, false)` 
+- `Pair(Unit, true)`
+
+Other examples:
 
 - `Triple<Unit, Boolean, Boolean`> = 1 * 2 * 2 = 4
 - `Pair<Int, Int>` = cardinality(Int) * cardinality(Int) = ∞ * ∞ = ∞
@@ -65,7 +70,12 @@ When combining types with `Pair/Triple` their cardinalities multiply (hence the 
 
 `Pair/Triple` are the generic version of data classes with 2 and 3 properties respectively.
 
-`data class User(val emailVerified: Boolean, val isAdmin: Boolean)` has the same cardinality as `Pair<Boolean, Boolean>`, 4. The elements are: `User(false, false)`, `User(false, true)`, `User(true, false)` and `User(true, true)`.
+`data class User(val emailVerified: Boolean, val isAdmin: Boolean)` has the same cardinality as `Pair<Boolean, Boolean>`, 4. The elements are: 
+
+- `User(false, false)`
+- `User(false, true)` 
+- `User(true, false)` 
+- `User(true, true)`.
 
 ## Sum Types (+)
 
