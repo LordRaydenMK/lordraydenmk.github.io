@@ -200,7 +200,7 @@ These are all valid approaches and when designing your UI state. But only one of
 
 ## Conclusion
 
-To model problems in code we use built-in types like: `Boolean`, `Int`, `String`... and in Kotlin we also create custom types using constructs like data class and sealed class. Model your UI state by picking a type (or combination of types) that has the same number of values as the possible states of the problem. This results in simpler and more robust code.
+To model problems in code we use built-in types like: `Boolean`, `Int`, `String`... and in Kotlin we also create custom types using constructs like data class and sealed class. Different language constructs have different effects on the cardinality of the model. Reduce the number of invalid states by picking the right combination. That will results in simpler and more robust code.
 
 Thanks [Gaël][gael] for the review.
 
