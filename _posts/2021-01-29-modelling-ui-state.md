@@ -10,7 +10,7 @@ tags:
 - cardinality
 ---
 
-The recommended approach from Google for Android development is holding the UI state in a `ViewModel` and having the `View` observe it. To achieve that one can use `LiveData`, `StateFlow`, `RxJava` or a similar tool. But how to model the UI state? Use a data class or a sealed class? Use one observable property or many? I will describe the tradeoffs between the approaches and present a tool to help you decide which one to use. This article is heavily inspired by [Types as Sets][types-as-sets] from the Elm guide.
+The recommended approach from Google for Android development is holding the UI state in a `ViewModel` and having the `View` observe it. To achieve that one can use `LiveData`, `StateFlow`, `RxJava` or a similar tool. But how to model the UI state? Use a data class or a sealed class? Use one observable property or many? I will describe the tradeoffs between the approaches and present a tool to help you decide which one to use. This article is heavily inspired by [Types as Sets][types-as-sets] from the Elm guide, a large part is a translation from Elm to Kotlin.
 
 ![Architecture](/images/posts/arch.jpg) Photo by [Marc-Olivier Jodoin][mark] on [Unsplash][unsplash]
 
