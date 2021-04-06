@@ -133,7 +133,7 @@ Thinking about Types as Sets and their cardinality helps with data modelling to 
 
 - a `String` where `"red"`, `"yellow"` and `"green"` are the valid options and everything else is invalid data. But then the user types `"rad"` instead of red and we have an issue. Or `"yelow"` or `"RED"`. Should all functions validate their arguments? Should all functions have tests? The root cause of the issue here is cardinality. A String has cardinality of ∞ while the our problem has 3. There are ∞ - 3 possible invalid values.
 
-- a data class `data class Color(val isRed: Boolean, val isYellow: Boolean, val isGreen: Boolean)` - here `Color(true, false, false)` represents red. Yet this still leaves room for invalid data e.g. `Color(true, true, true)`. Again you would need checks and tests to ensure values are valid. The cardinality of the data class `Color` is 8 and it has 8 - 3 = 5 illegal values. It's much better then the `String`, but we can still improve it.
+- a data class `data class Color(val isRed: Boolean, val isYellow: Boolean, val isGreen: Boolean)` - here `Color(true, false, false)` represents red. Yet this still leaves room for invalid data e.g. `Color(true, true, true)`. Again you would need checks and tests to ensure values are valid. The cardinality of the data class `Color` is 8 and it has 8 - 3 = 5 illegal values. It's much better than the `String`, but we can still improve it.
 
 - an enum - `enum class Color { RED, YELLOW, GREEN }` - this has a cardinality = 3. It matches exactly the possible  valid values of the problem. Illegal values are now impossible, so there is no need for tests that check data validity.
 
