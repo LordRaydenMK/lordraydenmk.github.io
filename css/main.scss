@@ -57,3 +57,16 @@ pre.highlight code,
   border: 3px solid #fff;
   border-radius:100%;
 }
+
+p.note
+{
+     -moz-border-radius: 6px;
+     -webkit-border-radius: 6px;
+     background-color: #f0f7fb;
+     border: solid 1px #3498db;
+     border-radius: 6px;
+     line-height: 18px;
+     mc-auto-number-format: '{b}Note: {/b}';
+     overflow: hidden;
+     padding: 12px;
+}
