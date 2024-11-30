@@ -1,6 +1,6 @@
 ---
 layout: post
-title: UI State and Callbacks
+title: UI State, Callbacks and Equality Pitfalls
 author: Stojan Anastasov
 tags:
 - android
@@ -37,12 +37,18 @@ Content(
 Let's say we have a new requirement, we want to add a favorite button to each superhero so we can keep track of our favorite superheroes. To do that we will introduce some functions:
 
 ```kotlin
-fun addToFavorites(superheroId: Long) = TODO()
+// ViewModel/Presenter
 
-fun removeFromFavorites(superheroId: Long) = TODO()
+fun onAddToFavorites(superheroId: Long) = TODO()
+
+fun onRemoveFromFavorites(superheroId: Long) = TODO()
 ```
 
 These functions can be part of the ViewModel/Presenter that delegates to a repository to store the IDs.
+
+
+
+> **Note**: In this example, the ViewModel/Presenter use a single function per action the view can take. The technique described here also works with a single function + a sealed class for individual actions.
 
 To achieve this we might be tempted to update our `SuperheroViewEntity` to include:
 
@@ -60,7 +66,7 @@ fun Superhero.toViewEntity() =
         id,
         name,
         imageUrl,
-        if (favorite) { removeFromFavorite(id) } else { addToFavorite(id) }
+        if (favorite) { onRemoveFromFavorites(id) } else { onAddToFavorites(id) }
     )
 
 // View layer
@@ -93,7 +99,7 @@ Some workarounds include:
 
 Those workarounds are IMO error prone. So let's explore if we can do better.
 
-We can remove the function, and add the `val favorite: Boolean` instead. The if check moves to the view layer.
+We can remove the function, and add the `val favorite: Boolean` instead. The `if` check moves to the view layer.
 
 ```kotlin
 data class SuperheroViewEntity(
@@ -106,9 +112,9 @@ data class SuperheroViewEntity(
 // View layer
 
 if (entity.favorite) {
-    Modifier.clickable { onRemoveFromFavorite(entity.id) }
+    Modifier.clickable { viewModel.onRemoveFromFavorites(entity.id) }
 } else {
-    Modifier.clickable { onAddToFavorite(entity.id) }
+    Modifier.clickable { viewModel.onAddToFavorites(entity.id) }
 }
 
 ```
@@ -122,15 +128,15 @@ What we ideally want is for the logic to be in the ViewModel/Presenter, the view
 An alternative approach:
 
 ```kotlin
-sealed class Action
-data class AddToFavorites(id: Long): Action
-data class RemoveFromFavorites(id: Long): Action
+sealed class FavoritesAction
+data class Add(id: Long): FavoritesAction
+data class Remove(id: Long): FavoritesAction
 
 data class SuperheroViewEntity(
     val id: Long, 
     val name: String, 
     val imageUrl: HttpUrl,
-    val action: Action,
+    val favoritesAction: FavoritesAction,
 )
 
 // ViewModel
@@ -139,12 +145,12 @@ fun Superhero.toViewEntity() =
         id,
         name,
         imageUrl,
-        if (favorite) RemoveFromFavorites(id) else AddToFavorites(id)
+        if (favorite) FavoritesAction.Remove(id) else FavoritesAction.Add(id)
     )
 
 // View layer
 
-Modifier.clickable { onAction(entity.action) }
+Modifier.clickable { viewModel.onFavoritesAction(entity.favoritesAction) }
 
 ```
 
